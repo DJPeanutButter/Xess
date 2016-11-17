@@ -51,26 +51,26 @@ struct Piece{
 	Piece (char r, char c, char t);
 };
 
-LRESULT CALLBACK	WndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK	WndProc		(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-void			EnableOpenGL (HWND hWnd, HDC *hDC, HGLRC *hRC);
-void			DisableOpenGL (HWND hWnd, HDC hDC, HGLRC hRC);
+void			EnableOpenGL	(HWND hWnd, HDC *hDC, HGLRC *hRC);
+void			DisableOpenGL	(HWND hWnd, HDC hDC, HGLRC hRC);
 
-Color			COLOR	(float r, float g, float b);
-Color			INVERT	(Color &c);
+Color			COLOR		(float r, float g, float b);
+Color			INVERT		(Color &c);
 
-void inline		SetColor		(Color c);
+void inline		SetColor	(Color c);
 void 			DrawBackground	(Color c1, Color c2);
 void 			DrawBackground	(float xMin, float xMax, float yMin, float yMax, Color c1, Color c2);
 
-Piece*			SelectPiece		(char r, char c, Piece* arrPieces, int lPieces);
-Piece*			SelectPiece		(char r, char c, std::vector<Piece> &p);
-void			MovePiece		(Piece &p, char r, char c);
-std::vector<Piece>	FindMoves		(Piece &p);
-std::vector<Piece>	FindMoves		(Piece &p, std::vector<Piece> pieces);
-std::vector<Piece>	FindMoves		(Piece &p, std::vector<Piece> friendly, std::vector<Piece> hostile);
+Piece*			SelectPiece	(char r, char c, Piece* arrPieces, int lPieces);
+Piece*			SelectPiece	(char r, char c, std::vector<Piece> &p);
+void			MovePiece	(Piece &p, char r, char c);
+std::vector<Piece>	FindMoves	(Piece &p);
+std::vector<Piece>	FindMoves	(Piece &p, std::vector<Piece> pieces);
+std::vector<Piece>	FindMoves	(Piece &p, std::vector<Piece> friendly, std::vector<Piece> hostile);
  
-int			FindTarget		(Piece &p, std::vector<Piece> v);
+int			FindTarget	(Piece &p, std::vector<Piece> v);
 
 
 int WINAPI WinMain (HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int iCmdShow){
