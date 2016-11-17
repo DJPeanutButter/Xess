@@ -53,48 +53,48 @@ struct Piece{
 
 LRESULT CALLBACK	WndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-void				EnableOpenGL (HWND hWnd, HDC *hDC, HGLRC *hRC);
-void				DisableOpenGL (HWND hWnd, HDC hDC, HGLRC hRC);
+void			EnableOpenGL (HWND hWnd, HDC *hDC, HGLRC *hRC);
+void			DisableOpenGL (HWND hWnd, HDC hDC, HGLRC hRC);
 
-Color				COLOR	(float r, float g, float b);
-Color				INVERT	(Color &c);
+Color			COLOR	(float r, float g, float b);
+Color			INVERT	(Color &c);
 
-void inline			SetColor		(Color c);
-void 				DrawBackground	(Color c1, Color c2);
-void 				DrawBackground	(float xMin, float xMax, float yMin, float yMax, Color c1, Color c2);
+void inline		SetColor		(Color c);
+void 			DrawBackground	(Color c1, Color c2);
+void 			DrawBackground	(float xMin, float xMax, float yMin, float yMax, Color c1, Color c2);
 
-Piece*				SelectPiece		(char r, char c, Piece* arrPieces, int lPieces);
-Piece*				SelectPiece		(char r, char c, std::vector<Piece> &p);
-void				MovePiece		(Piece &p, char r, char c);
+Piece*			SelectPiece		(char r, char c, Piece* arrPieces, int lPieces);
+Piece*			SelectPiece		(char r, char c, std::vector<Piece> &p);
+void			MovePiece		(Piece &p, char r, char c);
 std::vector<Piece>	FindMoves		(Piece &p);
 std::vector<Piece>	FindMoves		(Piece &p, std::vector<Piece> pieces);
 std::vector<Piece>	FindMoves		(Piece &p, std::vector<Piece> friendly, std::vector<Piece> hostile);
  
-int					FindTarget		(Piece &p, std::vector<Piece> v);
+int			FindTarget		(Piece &p, std::vector<Piece> v);
 
 
 int WINAPI WinMain (HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int iCmdShow){
 	
 #ifdef	_GLOBAL_INIT_
 
-	WNDCLASS			wc;
-    HWND				hWnd;
-    HDC 				hDC;
-    HGLRC				hRC;
-    MSG					msg;
-    BOOL				bQuit	= false;
+	WNDCLASS		wc;
+	HWND			hWnd;
+	HDC 			hDC;
+	HGLRC			hRC;
+	MSG			msg;
+	BOOL			bQuit	= false;
 	
-	bool				homeTurn = true;
+	bool			homeTurn = true;
 	
-	Color				bg1 (0.8f, 0.5f, 0.5f), bg2(0.2f, 0.5f, 0.5f);
-	Piece				sel (COLOR(1.0f, 1.0f, 0.0f), 6, 1, PT_SELECT);
+	Color			bg1 (0.8f, 0.5f, 0.5f), bg2(0.2f, 0.5f, 0.5f);
+	Piece			sel (COLOR(1.0f, 1.0f, 0.0f), 6, 1, PT_SELECT);
 	
 	std::vector<Piece>	home (GD_COLS);
 	std::vector<Piece>	away (GD_COLS);
 	std::vector<Piece>	moves;
 	
-	Piece*				selPtr = NULL;
-	Piece*				tarPtr = NULL;
+	Piece*			selPtr = NULL;
+	Piece*			tarPtr = NULL;
 	
 	Piece
 		*hRookLeft,
@@ -124,27 +124,27 @@ int WINAPI WinMain (HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,
 		home[i].row		= (char)-1;
 	}
 
-	hRookLeft			= &home[0];
+	hRookLeft		= &home[0];
 	hRookLeft->row		= GD_ROWS-1;
 	hRookLeft->col		= 0;
 	hRookLeft->type		= PT_ROOK;
 	
-	hKnightLeft			= &home[1];
+	hKnightLeft		= &home[1];
 	hKnightLeft->row	= GD_ROWS-1;
 	hKnightLeft->col	= 1;
 	hKnightLeft->type	= PT_KNIGHT;
 	
-	hBishopLeft			= &home[2];
+	hBishopLeft		= &home[2];
 	hBishopLeft->row	= GD_ROWS-1;
 	hBishopLeft->col	= 2;
 	hBishopLeft->type	= PT_BISHOP;
 	
-	hQueenLeft			= &home[3];
+	hQueenLeft		= &home[3];
 	hQueenLeft->row		= GD_ROWS-1;
 	hQueenLeft->col		= 3;
 	hQueenLeft->type	= PT_QUEEN;
 	
-	hQueenRight			= &home[4];
+	hQueenRight		= &home[4];
 	hQueenRight->row	= GD_ROWS-1;
 	hQueenRight->col	= GD_COLS-4;
 	hQueenRight->type	= PT_QUEEN;
@@ -159,7 +159,7 @@ int WINAPI WinMain (HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,
 	hKnightRight->col	= GD_COLS-2;
 	hKnightRight->type	= PT_KNIGHT;
 	
-	hRookRight			= &home[7];
+	hRookRight		= &home[7];
 	hRookRight->row		= GD_ROWS-1;
 	hRookRight->col		= GD_COLS-1;
 	hRookRight->type	= PT_ROOK;
@@ -173,27 +173,27 @@ int WINAPI WinMain (HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,
 		away[i].row		= (char)-1;
 	}
 	
-	aRookLeft			= &away[0];
+	aRookLeft		= &away[0];
 	aRookLeft->row		= 0;
 	aRookLeft->col		= 0;
 	aRookLeft->type		= PT_ROOK;
 	
-	aKnightLeft			= &away[1];
+	aKnightLeft		= &away[1];
 	aKnightLeft->row	= 0;
 	aKnightLeft->col	= 1;
 	aKnightLeft->type	= PT_KNIGHT;
 	
-	aBishopLeft			= &away[2];
+	aBishopLeft		= &away[2];
 	aBishopLeft->row	= 0;
 	aBishopLeft->col	= 2;
 	aBishopLeft->type	= PT_BISHOP;
 	
-	aQueenLeft			= &away[3];
+	aQueenLeft		= &away[3];
 	aQueenLeft->row		= 0;
 	aQueenLeft->col		= 3;
 	aQueenLeft->type	= PT_QUEEN;
 	
-	aQueenRight			= &away[4];
+	aQueenRight		= &away[4];
 	aQueenRight->row	= 0;
 	aQueenRight->col	= GD_COLS-4;
 	aQueenRight->type	= PT_QUEEN;
@@ -208,7 +208,7 @@ int WINAPI WinMain (HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,
 	aKnightRight->col	= GD_COLS-2;
 	aKnightRight->type	= PT_KNIGHT;
 	
-	aRookRight			= &away[7];
+	aRookRight		= &away[7];
 	aRookRight->row		= 0;
 	aRookRight->col		= GD_COLS-1;
 	aRookRight->type	= PT_ROOK;
@@ -343,18 +343,18 @@ Color::Color (float red, float green, float blue){
 
 Piece::Piece (){	
 	alive	= true;
-	row		= 0;
-	col		= 0;
+	row	= 0;
+	col	= 0;
 	type	= 0;
-	dir		= 0;
+	dir	= 0;
 }
 
 Piece::Piece (Color clr){
-	alive = true;
+	alive	= true;
 	
-	row = 0;
-	col = 0;
-	type= 0;
+	row	= 0;
+	col	= 0;
+	type	= 0;
 	dir	= 0;
 	
 	color.r = clr.r;
@@ -363,80 +363,81 @@ Piece::Piece (Color clr){
 }
 
 Piece::Piece (Color clr, char t){
-	alive = true;
+	alive	= true;
 	
-	row = 0;
-	col = 0;
-	type= t;
+	row	= 0;
+	col	= 0;
+	type	= t;
 	dir	= 0;
 	
-	color.r = clr.r;
-	color.g = clr.g;
-	color.b = clr.b;
+	color.r	= clr.r;
+	color.g	= clr.g;
+	color.b	= clr.b;
 }
 
 Piece::Piece (Color clr, char r, char c){
-	alive = true;
+	alive	= true;
 	
-	row = r;
-	col = c;
-	type= 0;
+	row	= r;
+	col	= c;
+	type	= 0;
 	dir	= 0;
 	
-	color.r = clr.r;
-	color.g = clr.g;
-	color.b = clr.b;
+	color.r	= clr.r;
+	color.g	= clr.g;
+	color.b	= clr.b;
 }
 
 Piece::Piece (Color clr, char r, char c, char t){
-	alive = true;
+	alive	= true;
 	
-	row = r;
-	col = c;
-	type= t;
+	row	= r;
+	col	= c;
+	type	= t;
 	dir	= 0;
 	
-	color.r = clr.r;
-	color.g = clr.g;
-	color.b = clr.b;
+	color.r	= clr.r;
+	color.g	= clr.g;
+	color.b	= clr.b;
 }
 
 Piece::Piece (char t){
-	alive = true;
+	alive	= true;
 	
-	row = 0;
-	col = 0;
-	type= t;
+	row	= 0;
+	col	= 0;
+	type	= t;
 	dir	= 0;
 }
 
 Piece::Piece (char r, char c){
-	alive = true;
+	alive	= true;
 	
-	row = r;
-	col = c;
-	type= 0;
+	row	= r;
+	col	= c;
+	type	= 0;
 	dir	= 0;
 }
 
 Piece::Piece (char r, char c, char t){
-	alive = true;
+	alive	= true;
 	
-	row = r;
-	col = c;
-	type= t;
+	row	= r;
+	col	= c;
+	type	= t;
 	dir	= 0;
 }
 
 void Piece::draw (){
 	if (not alive)
 		return;
+	
 	double dR = 2.0/(double)GD_ROWS;
 	double dC = 2.0/(double)GD_COLS;
 	double Cx = dC * col - 1.0 + dC/2.0;
 	double Cy = 1.0 - (dR * row + dR/2.0);
+	
 	if (type == PT_CIRCLE){
-		
 		glColor3f (color.r, color.g, color.b);
 		glPushMatrix ();
 		glTranslated (Cx, Cy, 0.0);
@@ -462,14 +463,13 @@ void Piece::draw (){
 				glVertex2d (0.0, 0.0);
 		}
 		
-		
 		glVertex2d (dC * 0.4, 0.0);
 		glEnd ();
 		glPopMatrix ();
 	}else if (type == PT_SELECT){
 		glColor3f	(color.r, color.g, color.b);
-		glPushMatrix ();
-		glTranslated (Cx, Cy, 0.0);
+		glPushMatrix	();
+		glTranslated	(Cx, Cy, 0.0);
 		glBegin		(GL_TRIANGLE_STRIP);
 		glVertex2d	(-3.0*dC/8.0, 3.0*dR/8.0);
 		glVertex2d	(-dC/2.0, dR/2.0);
@@ -482,11 +482,11 @@ void Piece::draw (){
 		glVertex2d	(-3.0*dC/8.0, 3.0*dR/8.0);
 		glVertex2d	(-dC/2.0, dR/2.0);
 		glEnd		();
-		glPopMatrix ();
+		glPopMatrix	();
 	}else if (type == PT_OPTION){
 		glColor3f	(color.r, color.g, color.b);
-		glPushMatrix ();
-		glTranslated (Cx, Cy, 0.0);
+		glPushMatrix	();
+		glTranslated	(Cx, Cy, 0.0);
 		glBegin		(GL_TRIANGLE_STRIP);
 		glVertex2d	(-3.0*dC/8.0, 3.0*dR/8.0);
 		glVertex2d	(-3.0*dC/8.0, -3.0*dR/8.0);
@@ -496,8 +496,8 @@ void Piece::draw (){
 		glPopMatrix	();
 	}else if (type == PT_ROOK){
 		glColor3f	(color.r, color.g, color.b);
-		glPushMatrix ();
-		glTranslated (Cx, Cy, 0.0);
+		glPushMatrix	();
+		glTranslated	(Cx, Cy, 0.0);
 		glBegin		(GL_TRIANGLE_FAN);
 		glVertex2d	(0.0, 0.0);
 		glVertex2d	(3.0*dC/8.0, 1.0*dR/8.0);
@@ -514,13 +514,13 @@ void Piece::draw (){
 		glVertex2d	(3.0*dC/8.0, -1.0*dR/8.0);
 		glVertex2d	(3.0*dC/8.0, 1.0*dR/8.0);
 		glEnd		();
-		glPopMatrix ();
+		glPopMatrix	();
 	}else if (type == PT_BISHOP){
 		dR = (dC + dR)/2.0;
 		dC = dR;
 		glColor3f	(color.r, color.g, color.b);
-		glPushMatrix ();
-		glTranslated (Cx, Cy, 0.0);
+		glPushMatrix	();
+		glTranslated	(Cx, Cy, 0.0);
 		glRotated 	(45.0, 0.0, 0.0, 1.0);
 		glBegin		(GL_TRIANGLE_FAN);
 		glVertex2d	(0.0, 0.0);
@@ -538,71 +538,71 @@ void Piece::draw (){
 		glVertex2d	(3.0*dC/8.0, -0.5*dR/8.0);
 		glVertex2d	(3.0*dC/8.0, 0.5*dR/8.0);
 		glEnd		();
-		glPopMatrix ();
+		glPopMatrix	();
 	}else if (type == PT_KNIGHT){
 		glColor3f	(color.r, color.g, color.b);
 		glPushMatrix	();
 		glTranslated	(Cx, Cy, 0.0);
-		glBegin			(GL_TRIANGLE_STRIP);
-		glVertex2d		(3.0*dC/40.0, 3.0*dR/8.0);
-		glVertex2d		(3.0*dC/40.0, 9.0*dR/40.0);
-		glVertex2d		(9.0*dC/40.0, 3.0*dR/8.0);
-		glVertex2d		(9.0*dC/40.0, 9.0*dR/40.0);
-		glEnd			();
-		glBegin			(GL_TRIANGLE_STRIP);
-		glVertex2d		(9.0*dC/40.0, 9.0*dR/40.0);
-		glVertex2d		(9.0*dC/40.0, 3.0*dR/40.0);
-		glVertex2d		(3.0*dC/8.0, 9.0*dR/40.0);
-		glVertex2d		(3.0*dC/8.0, 3.0*dR/40.0);
-		glEnd			();
-		glBegin			(GL_TRIANGLE_STRIP);
-		glVertex2d		(3.0*dC/40.0, -3.0*dR/8.0);
-		glVertex2d		(3.0*dC/40.0, -9.0*dR/40.0);
-		glVertex2d		(9.0*dC/40.0, -3.0*dR/8.0);
-		glVertex2d		(9.0*dC/40.0, -9.0*dR/40.0);
-		glEnd			();
-		glBegin			(GL_TRIANGLE_STRIP);
-		glVertex2d		(9.0*dC/40.0, -9.0*dR/40.0);
-		glVertex2d		(9.0*dC/40.0, -3.0*dR/40.0);
-		glVertex2d		(3.0*dC/8.0, -9.0*dR/40.0);
-		glVertex2d		(3.0*dC/8.0, -3.0*dR/40.0);
-		glEnd			();
-		glBegin			(GL_TRIANGLE_STRIP);
-		glVertex2d		(-3.0*dC/40.0, 3.0*dR/8.0);
-		glVertex2d		(-3.0*dC/40.0, 9.0*dR/40.0);
-		glVertex2d		(-9.0*dC/40.0, 3.0*dR/8.0);
-		glVertex2d		(-9.0*dC/40.0, 9.0*dR/40.0);
-		glEnd			();
-		glBegin			(GL_TRIANGLE_STRIP);
-		glVertex2d		(-9.0*dC/40.0, 9.0*dR/40.0);
-		glVertex2d		(-9.0*dC/40.0, 3.0*dR/40.0);
-		glVertex2d		(-3.0*dC/8.0, 9.0*dR/40.0);
-		glVertex2d		(-3.0*dC/8.0, 3.0*dR/40.0);
-		glEnd			();
-		glBegin			(GL_TRIANGLE_STRIP);
-		glVertex2d		(-3.0*dC/40.0, -3.0*dR/8.0);
-		glVertex2d		(-3.0*dC/40.0, -9.0*dR/40.0);
-		glVertex2d		(-9.0*dC/40.0, -3.0*dR/8.0);
-		glVertex2d		(-9.0*dC/40.0, -9.0*dR/40.0);
-		glEnd			();
-		glBegin			(GL_TRIANGLE_STRIP);
-		glVertex2d		(-9.0*dC/40.0, -9.0*dR/40.0);
-		glVertex2d		(-9.0*dC/40.0, -3.0*dR/40.0);
-		glVertex2d		(-3.0*dC/8.0, -9.0*dR/40.0);
-		glVertex2d		(-3.0*dC/8.0, -3.0*dR/40.0);
-		glEnd			();
-		glPopMatrix		();
+		glBegin		(GL_TRIANGLE_STRIP);
+		glVertex2d	(3.0*dC/40.0, 3.0*dR/8.0);
+		glVertex2d	(3.0*dC/40.0, 9.0*dR/40.0);
+		glVertex2d	(9.0*dC/40.0, 3.0*dR/8.0);
+		glVertex2d	(9.0*dC/40.0, 9.0*dR/40.0);
+		glEnd		();
+		glBegin		(GL_TRIANGLE_STRIP);
+		glVertex2d	(9.0*dC/40.0, 9.0*dR/40.0);
+		glVertex2d	(9.0*dC/40.0, 3.0*dR/40.0);
+		glVertex2d	(3.0*dC/8.0, 9.0*dR/40.0);
+		glVertex2d	(3.0*dC/8.0, 3.0*dR/40.0);
+		glEnd		();
+		glBegin		(GL_TRIANGLE_STRIP);
+		glVertex2d	(3.0*dC/40.0, -3.0*dR/8.0);
+		glVertex2d	(3.0*dC/40.0, -9.0*dR/40.0);
+		glVertex2d	(9.0*dC/40.0, -3.0*dR/8.0);
+		glVertex2d	(9.0*dC/40.0, -9.0*dR/40.0);
+		glEnd		();
+		glBegin		(GL_TRIANGLE_STRIP);
+		glVertex2d	(9.0*dC/40.0, -9.0*dR/40.0);
+		glVertex2d	(9.0*dC/40.0, -3.0*dR/40.0);
+		glVertex2d	(3.0*dC/8.0, -9.0*dR/40.0);
+		glVertex2d	(3.0*dC/8.0, -3.0*dR/40.0);
+		glEnd		();
+		glBegin		(GL_TRIANGLE_STRIP);
+		glVertex2d	(-3.0*dC/40.0, 3.0*dR/8.0);
+		glVertex2d	(-3.0*dC/40.0, 9.0*dR/40.0);
+		glVertex2d	(-9.0*dC/40.0, 3.0*dR/8.0);
+		glVertex2d	(-9.0*dC/40.0, 9.0*dR/40.0);
+		glEnd		();
+		glBegin		(GL_TRIANGLE_STRIP);
+		glVertex2d	(-9.0*dC/40.0, 9.0*dR/40.0);
+		glVertex2d	(-9.0*dC/40.0, 3.0*dR/40.0);
+		glVertex2d	(-3.0*dC/8.0, 9.0*dR/40.0);
+		glVertex2d	(-3.0*dC/8.0, 3.0*dR/40.0);
+		glEnd		();
+		glBegin		(GL_TRIANGLE_STRIP);
+		glVertex2d	(-3.0*dC/40.0, -3.0*dR/8.0);
+		glVertex2d	(-3.0*dC/40.0, -9.0*dR/40.0);
+		glVertex2d	(-9.0*dC/40.0, -3.0*dR/8.0);
+		glVertex2d	(-9.0*dC/40.0, -9.0*dR/40.0);
+		glEnd		();
+		glBegin		(GL_TRIANGLE_STRIP);
+		glVertex2d	(-9.0*dC/40.0, -9.0*dR/40.0);
+		glVertex2d	(-9.0*dC/40.0, -3.0*dR/40.0);
+		glVertex2d	(-3.0*dC/8.0, -9.0*dR/40.0);
+		glVertex2d	(-3.0*dC/8.0, -3.0*dR/40.0);
+		glEnd		();
+		glPopMatrix	();
 	}else if (type == PT_QUEEN){
 		glColor3f	(color.r, color.g, color.b);
-		glPushMatrix ();
-		glTranslated (Cx, Cy, 0.0);
+		glPushMatrix	();
+		glTranslated	(Cx, Cy, 0.0);
 		glBegin		(GL_TRIANGLES);
 		for (int i=0;i<16;i++) {
-			glVertex2d	(cos (i*PI/8.0-PI/16.0)*dC*0.325, sin (i*PI/8.0-PI/16.0)*dR*0.325);
+			glVertex2d (cos (i*PI/8.0-PI/16.0)*dC*0.325, sin (i*PI/8.0-PI/16.0)*dR*0.325);
 			if (i%2==1)
 				glVertex2d (0.0, 0.0);
 		}
-		glVertex2d (dC * 0.325, 0.0);
+		glVertex2d	(dC * 0.325, 0.0);
 		glEnd		();
 		glPopMatrix	();
 	}
@@ -631,13 +631,13 @@ void EnableOpenGL (HWND hWnd, HDC *hDC, HGLRC *hRC){
 
     ZeroMemory (&pfd, sizeof (pfd));
 
-    pfd.nSize = sizeof (pfd);
-    pfd.nVersion = 1;
-    pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL;
-    pfd.iPixelType = PFD_TYPE_RGBA;
-    pfd.cColorBits = 24;
-    pfd.cDepthBits = 16;
-    pfd.iLayerType = PFD_MAIN_PLANE;
+    pfd.nSize		= sizeof (pfd);
+    pfd.nVersion	= 1;
+    pfd.dwFlags		= PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL;
+    pfd.iPixelType	= PFD_TYPE_RGBA;
+    pfd.cColorBits	= 24;
+    pfd.cDepthBits	= 16;
+    pfd.iLayerType	= PFD_MAIN_PLANE;
 
     iFormat = ChoosePixelFormat (*hDC, &pfd);
     SetPixelFormat (*hDC, iFormat, &pfd);
@@ -649,10 +649,9 @@ void EnableOpenGL (HWND hWnd, HDC *hDC, HGLRC *hRC){
 }
 
 void DisableOpenGL (HWND hWnd, HDC hDC, HGLRC hRC){
-    wglMakeCurrent (NULL, NULL);
-    wglDeleteContext (hRC);
-    ReleaseDC (hWnd, hDC);
-	
+	wglMakeCurrent	(NULL, NULL);
+	wglDeleteContext(hRC);
+	ReleaseDC	(hWnd, hDC);
 	return;
 }
 
@@ -732,7 +731,7 @@ void MovePiece (Piece &p, char r, char c){
 
 std::vector<Piece> FindMoves (Piece &p){
 	std::vector<Piece>	retVal;
-	Piece				temp;
+	Piece			temp;
 	
 	temp.color	= COLOR (1.0f, 1.0f, 1.0f);
 	temp.type	= PT_OPTION;
@@ -780,8 +779,7 @@ std::vector<Piece> FindMoves (Piece &p){
 					temp.col = p.col+d;
 					retVal.push_back (temp);
 				}
-			}
-			//*/
+			}//*/
 			if (p.type != PT_QUEEN)
 				break;
 		case PT_BISHOP:
@@ -1100,7 +1098,7 @@ std::vector<Piece> FindMoves (Piece &p, std::vector<Piece> pieces){
 
 std::vector<Piece> FindMoves (Piece &p, std::vector<Piece> friendly, std::vector<Piece> hostile){
 	std::vector<Piece>	retVal;
-	Piece				temp;
+	Piece			temp;
 	
 	temp.color	= COLOR (1.0f, 1.0f, 1.0f);
 	temp.type	= PT_OPTION;
